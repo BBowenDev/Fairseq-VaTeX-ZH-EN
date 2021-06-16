@@ -33,3 +33,12 @@ Depending on existing permissions, the script may need to be modified with `chmo
 ```
 
 ## Preprocessing
+
+
+Depending on existing permissions, the script may need to be modified with `chmod 755`.
+```
+%cd /root/Fairseq-VaTeX-ZH-EN
+#!chmod 755 ./prepare.sh
+!./preprocess.sh
+```
+
