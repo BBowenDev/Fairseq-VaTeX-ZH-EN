@@ -7,6 +7,7 @@ if [ ! -d "${VATEX}" ]
 then
 	echo "NO VATEX"
 	exit 1
+fi
 
 #format vatex folder
 if [ ! -d "${VATEX}/raw" ]
