@@ -24,3 +24,4 @@ then
 	cd $FV
 	git clone https://github.com/rsennrich/subword-nmt
 fi
+exit 0
