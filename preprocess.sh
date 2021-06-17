@@ -3,6 +3,11 @@
 FV=$(pwd)
 VT=$FV/vatex
 
+if [ ! -d "${VATEX}" ]
+then
+	echo "NO VATEX"
+	exit 1
+
 #format vatex folder
 if [ ! -d "${VATEX}/raw" ]
 then 
