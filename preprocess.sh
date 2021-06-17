@@ -5,6 +5,8 @@ VT=$FV/vatex
 
 if [ ! -d "${VATEX}" ]
 then
+	echo $FV
+	echo $VT
 	echo "NO VATEX"
 	exit 1
 fi
