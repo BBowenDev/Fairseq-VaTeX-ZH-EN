@@ -3,7 +3,7 @@ pip install nltk
 pip install jieba
 FV=$(pwd)
 echo "Checking External"
-if [ ! -d $FV/external ]
+if [ ! -d "${FV}/external" ]
 then
 	mkdir $FV/external
 	mkdir $FV/external/fairseq
@@ -22,7 +22,7 @@ then
 	echo "Installed Apex"
 fi
 echo "Checking subword-nmt"
-if [ ! -d $FV/subword-nmt ]
+if [ ! -d "${FV}/subword-nmt" ]
 then		
 	#install subword-nmt
 	cd $FV
