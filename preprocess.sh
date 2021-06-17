@@ -37,9 +37,9 @@ cd $FV/subword-nmt
 #10,000 merge operations are used [can be hyperparamaterized] 
 
 #process is first completed in English
-python ./learn_bpe.py -s 10000 < "${TOK}/train_tok.en" > "${TOK}/codes_en.bpe"
-python ./apply_bpe.py -c "${TOK}/codes_en.bpe" < "${TOK}/train_tok.en" > "${BPE}/train.bpe10000.en
+python ./subword_nmt/learn_bpe.py -s 10000 < "${TOK}/train_tok.en" > "${TOK}/codes_en.bpe"
+python ./subword_nmt/apply_bpe.py -c "${TOK}/codes_en.bpe" < "${TOK}/train_tok.en" > "${BPE}/train.bpe10000.en"
 
 #process is repeated with Chinese
-python ./learn_bpe.py -s 10000 < "${TOK}/train_tok.zh" > "${TOK}/codes_zh.bpe"
-python ./apply_bpe.py -c "${TOK}/codes_zh.bpe" < "${TOK}/train_tok.zh" > "${BPE}/train.bpe10000.zh
+python ./subword_nmt/learn_bpe.py -s 10000 < "${TOK}/train_tok.zh" > "${TOK}/codes_zh.bpe"
+python ./subword_nmt/apply_bpe.py -c "${TOK}/codes_zh.bpe" < "${TOK}/train_tok.zh" > "${BPE}/train.bpe10000.zh"
