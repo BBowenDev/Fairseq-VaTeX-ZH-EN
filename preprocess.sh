@@ -3,33 +3,25 @@
 FV=$(pwd)
 VT=$FV/vatex
 
-if [ ! -d $VT ]
-then
-	echo $FV
-	echo $VT
-	echo "NO VATEX"
-	exit 1
-fi
-
 #format vatex folder
-if [ ! -d "${VATEX}/raw" ]
+if [ ! -d "${VT}/raw" ]
 then 
-	mkdir $VATEX/raw
+	mkdir $VT/raw
 fi
 
-if [ ! -d "${VATEX}/tok" ]
+if [ ! -d "${VT}/tok" ]
 then
-	mkdir $VATEX/tok
+	mkdir $VT/tok
 fi
 
-if [ ! -d "${VATEX}/bpe" ]
+if [ ! -d "${VT}/bpe" ]
 then
-	mkdir $VATEX/bpe
+	mkdir $VT/bpe
 fi
 
-TOK=$VATEX/tok
-RAW=$VATEX/raw
-BPE=$VATEX/bpe
+TOK=$VT/tok
+RAW=$VT/raw
+BPE=$VT/bpe
 
 #get raw captions
 wget "https://eric-xw.github.io/vatex-website/data/vatex_training_v1.0.json" -P $RAW
@@ -37,7 +29,7 @@ wget "https://eric-xw.github.io/vatex-website/data/vatex_validation_v1.0.json" -
 wget "https://eric-xw.github.io/vatex-website/data/vatex_public_test_english_v1.1.json" -P $RAW
 
 #run preprocessing script on raw captions, tokenizing and saving to new files
-cd $VATEX/scripts
+cd $VT/scripts
 python vatex_preprocess.py
 
 cd $FV/subword-nmt
