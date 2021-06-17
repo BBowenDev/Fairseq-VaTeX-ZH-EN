@@ -10,7 +10,8 @@ FV=$(pwd)
 if [ ! -d "${FV}/vatex" ]
 then
 	#create vatex folders
-	mkdir -p $FV/vatex/scripts
+	mkdir $FV/vatex
+	mkdir $FV/vatex/scripts
 fi
 
 mv vatex_preprocess.py $FV/vatex/scripts
