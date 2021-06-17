@@ -3,7 +3,7 @@
 FV=$(pwd)
 VT=$FV/vatex
 
-if [ ! -d "${VATEX}" ]
+if [ ! -d $VT ]
 then
 	echo $FV
 	echo $VT
