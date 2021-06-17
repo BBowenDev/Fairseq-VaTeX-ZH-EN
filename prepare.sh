@@ -13,7 +13,6 @@ then
 	mkdir $FV/external
 	
 	#install fairseq
-	echo "Installing Fairseq"
 	cd $FV/external
 	git clone https://github.com/pytorch/fairseq
 	cd fairseq
