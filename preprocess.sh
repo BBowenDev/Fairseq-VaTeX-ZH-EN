@@ -4,6 +4,7 @@ FV=$(pwd)
 VT=$FV/vatex
 
 #format vatex folder
+echo "Formatting directories"
 if [ ! -d "${VT}/raw" ]
 then 
 	mkdir $VT/raw
@@ -24,22 +25,25 @@ RAW=$VT/raw
 BPE=$VT/bpe
 
 #get raw captions
+echo "Getting raw captions"
 wget "https://eric-xw.github.io/vatex-website/data/vatex_training_v1.0.json" -P $RAW
 wget "https://eric-xw.github.io/vatex-website/data/vatex_validation_v1.0.json" -P $RAW
 wget "https://eric-xw.github.io/vatex-website/data/vatex_public_test_english_v1.1.json" -P $RAW
 
 #run preprocessing script on raw captions, tokenizing and saving to new files
+echo "Tokenizing dataset"
 cd $VT/scripts
 python vatex_preprocess.py
 
-cd $FV/subword-nmt
-
 #10,000 merge operations are used [can be hyperparamaterized] 
 
+cd $FV/subword-nmt
 #process is first completed in English
+echo "Learning BPE for EN"
 python ./subword_nmt/learn_bpe.py -s 10000 < "${TOK}/train_tok.en" > "${TOK}/codes_en.bpe"
 python ./subword_nmt/apply_bpe.py -c "${TOK}/codes_en.bpe" < "${TOK}/train_tok.en" > "${BPE}/train.bpe10000.en"
 
 #process is repeated with Chinese
+echo "Learning BPE for ZH"
 python ./subword_nmt/learn_bpe.py -s 10000 < "${TOK}/train_tok.zh" > "${TOK}/codes_zh.bpe"
 python ./subword_nmt/apply_bpe.py -c "${TOK}/codes_zh.bpe" < "${TOK}/train_tok.zh" > "${BPE}/train.bpe10000.zh"
