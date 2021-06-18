@@ -17,14 +17,9 @@ if [ ! -d "${VT}/bpe" ]; then
 	mkdir $VT/bpe
 fi
 
-if [ ! -d "${VT}/vocab" ]; then
-	mkdir $VT/vocab
-fi
-
 TOK=$VT/tok
 RAW=$VT/raw
 BPE=$VT/bpe
-VOC=$VT/vocab
 
 #get raw captions
 echo "Getting raw captions"
@@ -43,10 +38,11 @@ echo "Learning BPE"
 for TYPE in "train" "val" "test"; do
 	for LANG in "en" "zh"; do 
 		echo "--${TYPE}-${LANG}"
+		
 		INPUT="${TOK}/${TYPE}_tok.${LANG}"
 		OUTPUT="${BPE}/${TYPE}.bpe10000.${LANG}"
 		CODES="${TOK}/codes_${LANG}.bpe"
-		VOCAB="${VOC}"
+		VOCAB="${VT}/vocab"
 		
 		#no test file for ZH-- skip the BPE for that combination
 		if [[ ! "$TYPE" == "test" && "$LANG" == "zh" ]]; then
