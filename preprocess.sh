@@ -53,7 +53,7 @@ for TYPE in "train" "val" "test"; do
 		
 		#no test file for ZH-- skip the BPE for that combination
 		if [[ ! "$TYPE" == "test" && "$LANG" == "zh" ]]; then
-			python ./subword_nmt/learn_join_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB &
+			python ./subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB &
 		fi
 	done
 done
