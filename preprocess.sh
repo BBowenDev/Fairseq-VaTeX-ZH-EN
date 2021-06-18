@@ -19,6 +19,7 @@ fi
 
 if [ ! -d "${VT}/vocab" ]; then
 	mkdir $VT/vocab
+fi
 
 TOK=$VT/tok
 RAW=$VT/raw
