@@ -46,7 +46,7 @@ for TYPE in "train" "val" "test"; do
 		INPUT="${TOK}/${TYPE}_tok.${LANG}"
 		OUTPUT="${BPE}/${TYPE}.bpe10000.${LANG}"
 		CODES="${TOK}/codes_${LANG}.bpe"
-		VOCAB="${VOC}/vocab"
+		VOCAB="${VOC}"
 		
 		#no test file for ZH-- skip the BPE for that combination
 		if [[ ! "$TYPE" == "test" && "$LANG" == "zh" ]]; then
