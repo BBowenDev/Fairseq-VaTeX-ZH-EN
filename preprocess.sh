@@ -17,9 +17,13 @@ if [ ! -d "${VT}/bpe" ]; then
 	mkdir $VT/bpe
 fi
 
+if [ ! -d "${VT}/vocab" ]; then
+	mkdir $VT/vocab
+
 TOK=$VT/tok
 RAW=$VT/raw
 BPE=$VT/bpe
+VOC=$VT/vocab
 
 #get raw captions
 echo "Getting raw captions"
@@ -32,22 +36,43 @@ echo "Tokenizing dataset"
 cd $VT/scripts
 python vatex_preprocess.py
 
-#10,000 merge operations are used (can be hyperparamaterized) 
+#10,000 merge operations are used (can be hyperparamaterized)
+#learning and applying bpe are broken up so they can be parallelized
 cd $FV/subword-nmt
 echo "Learning BPE"
 for TYPE in "train" "val" "test"; do
 	for LANG in "en" "zh"; do 
 		echo "--${TYPE}-${LANG}"
 		
+		MERGES=10000
 		INPUT="${TOK}/${TYPE}_tok.${LANG}"
-		OUTPUT="${BPE}/${TYPE}.bpe10000.${LANG}"
+		OUTPUT="${BPE}/${TYPE}.bpe${MERGES}.${LANG}"
 		CODES="${TOK}/codes_${LANG}.bpe"
-		VOCAB="${VT}/vocab"
+		VOCAB="${VOC}"
 		
 		#no test file for ZH-- skip the BPE for that combination
 		if [[ ! "$TYPE" == "test" && "$LANG" == "zh" ]]; then
-			python ./subword_nmt/learn_bpe.py -s 10000 < $INPUT > $CODES
-			python ./subword_nmt/apply_bpe.py -c $CODES --vocabulary $VOCAB < $INPUT > $OUTPUT
+			python ./subword_nmt/learn_join_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB &
 		fi
 	done
 done
+wait
+
+#once all BPE has been learned, it is applied
+echo "Applying BPE"
+for TYPE in "train" "val" "test"; do
+	for LANG in "en" "zh"; do 
+		echo "--${TYPE}-${LANG}"
+		
+		INPUT="${TOK}/${TYPE}_tok.${LANG}"
+		OUTPUT="${BPE}/${TYPE}.bpe${MERGES}.${LANG}"
+		CODES="${TOK}/codes_${LANG}.bpe"
+		VOCAB="${VOC}"
+		
+		#no test file for ZH-- skip the BPE for that combination
+		if [[ ! "$TYPE" == "test" && "$LANG" == "zh" ]]; then
+			python ./subword_nmt/apply_bpe.py -c $CODES --vocabulary $VOCAB < $INPUT > $OUTPUT &
+		fi
+	done
+done
+wait
