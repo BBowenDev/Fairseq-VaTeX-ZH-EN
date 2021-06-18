@@ -41,7 +41,7 @@ python vatex_preprocess.py
 #10,000 merge operations are used (can be hyperparamaterized)
 #learning and applying bpe are broken up so they can be parallelized
 cd $FV/subword-nmt
-echo "Learning BPE"
+echo "Learning BPE:"
 for TYPE in "train" "val" "test"; do
 	for LANG in "en" "zh"; do 
 		echo "--${TYPE}-${LANG}"
@@ -53,7 +53,7 @@ for TYPE in "train" "val" "test"; do
 		VOCAB="${VOC}/${TYPE}_vocab.${LANG}"
 		
 		#no test file for ZH-- skip the BPE for that combination
-		if [[ ! ("$TYPE" == "test" && "$LANG" == "zh") ]]; then
+		if [[ ! ($TYPE == "test" && $LANG == "zh") ]]; then
 			python ./subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB
 		fi
 	done
@@ -61,7 +61,7 @@ done
 wait
 
 #once all BPE has been learned, it is applied
-echo "Applying BPE"
+echo "Applying BPE:"
 for TYPE in "train" "val" "test"; do
 	for LANG in "en" "zh"; do 
 		echo "--${TYPE}-${LANG}"
@@ -72,7 +72,7 @@ for TYPE in "train" "val" "test"; do
 		VOCAB="${VOC}/${TYPE}_vocab.${LANG}"
 		
 		#no test file for ZH-- skip the BPE for that combination
-		if [[ ! ("$TYPE" == "test" && "$LANG" == "zh") ]]; then
+		if [[ ! ($TYPE == "test" && $LANG == "zh") ]]; then
 			python ./subword_nmt/apply_bpe.py -c $CODES --vocabulary $VOCAB < $INPUT > $OUTPUT
 		fi
 	done
