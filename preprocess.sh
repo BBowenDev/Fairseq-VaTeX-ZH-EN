@@ -5,24 +5,26 @@ VT=$FV/vatex
 
 #format vatex folder
 echo "Formatting directories"
-if [ ! -d "${VT}/raw" ]
-then 
+if [ ! -d "${VT}/raw" ]; then 
 	mkdir $VT/raw
 fi
 
-if [ ! -d "${VT}/tok" ]
-then
+if [ ! -d "${VT}/tok" ]; then
 	mkdir $VT/tok
 fi
 
-if [ ! -d "${VT}/bpe" ]
-then
+if [ ! -d "${VT}/bpe" ]; then
 	mkdir $VT/bpe
+fi
+
+if [ ! -d "${VT}/vocab" ]; then
+	mkdir $VT/vocab
 fi
 
 TOK=$VT/tok
 RAW=$VT/raw
 BPE=$VT/bpe
+VOC=$VT/vocab
 
 #get raw captions
 echo "Getting raw captions"
@@ -35,15 +37,21 @@ echo "Tokenizing dataset"
 cd $VT/scripts
 python vatex_preprocess.py
 
-#10,000 merge operations are used [can be hyperparamaterized] 
-
+#10,000 merge operations are used (can be hyperparamaterized) 
 cd $FV/subword-nmt
-#process is first completed in English
-echo "Learning BPE for EN"
-python ./subword_nmt/learn_bpe.py -s 10000 < "${TOK}/train_tok.en" > "${TOK}/codes_en.bpe"
-python ./subword_nmt/apply_bpe.py -c "${TOK}/codes_en.bpe" < "${TOK}/train_tok.en" > "${BPE}/train.bpe10000.en"
-
-#process is repeated with Chinese
-echo "Learning BPE for ZH"
-python ./subword_nmt/learn_bpe.py -s 10000 < "${TOK}/train_tok.zh" > "${TOK}/codes_zh.bpe"
-python ./subword_nmt/apply_bpe.py -c "${TOK}/codes_zh.bpe" < "${TOK}/train_tok.zh" > "${BPE}/train.bpe10000.zh"
+echo "Learning BPE"
+for TYPE in "train" "val" "test"; do
+	for LANG in "en" "zh"; do 
+		echo "--${TYPE}-${LANG}"
+		INPUT="${TOK}/${TYPE}_tok.${LANG}"
+		OUTPUT="${BPE}/${TYPE}.bpe10000.${LANG}"
+		CODES="${TOK}/codes_${LANG}.bpe"
+		VOCAB="${VOC}/vocab"
+		
+		#no test file for ZH-- skip the BPE for that combination
+		if [[ ! "$TYPE" == "test" && "$LANG" == "zh" ]]; then
+			python ./subword_nmt/learn_bpe.py -s 10000 < $INPUT > $CODES
+			python ./subword_nmt/apply_bpe.py -c $CODES --vocabulary $VOCAB < $INPUT > $OUTPUT
+		fi
+	done
+done
