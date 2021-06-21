@@ -43,7 +43,7 @@ python vatex_preprocess.py
 #learning and applying bpe are broken up so they can be parallelized
 cd $SWNMT
 echo "Learning BPE:"
-for TYPE in "train" "val" "test"; do
+for TYPE in "train" "test"; do #removed "val"
 	for LANG in "en" "zh"; do 
 		MERGES=10000
 		INPUT="${TOK}/${TYPE}_tok.${LANG}"
@@ -54,7 +54,7 @@ for TYPE in "train" "val" "test"; do
 		#no test file for ZH-- skip the BPE for that combination
 		if [ ! $TYPE == "test" ] && [ ! $LANG == "zh" ]; then
 			echo "--${TYPE}-${LANG}"
-			python $SWNMT/subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB -v
+			python $SWNMT/subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB &
 		fi
 	done
 done
