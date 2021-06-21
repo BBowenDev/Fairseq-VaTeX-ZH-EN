@@ -62,7 +62,7 @@ wait
 
 #once all BPE has been learned, it is applied
 echo "Applying BPE:"
-for TYPE in "train" "val" "test"; do
+for TYPE in "train" "test"; do #removed "val"
 	for LANG in "en" "zh"; do 
 		INPUT="${TOK}/${TYPE}_tok.${LANG}"
 		OUTPUT="${BPE}/${TYPE}.bpe${MERGES}.${LANG}"
