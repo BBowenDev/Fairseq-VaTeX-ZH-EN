@@ -54,7 +54,7 @@ for TYPE in "train" "val" "test"; do
 		#no test file for ZH-- skip the BPE for that combination
 		if [ ! $TYPE == "test" ] && [ ! $LANG == "zh" ]; then
 			echo "--${TYPE}-${LANG}"
-			python $SWNMT/subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB &
+			python $SWNMT/subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB -v
 		fi
 	done
 done
