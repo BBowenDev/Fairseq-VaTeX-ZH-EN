@@ -48,9 +48,9 @@ for TYPE in "train" "test"; do #removed "val"
 		MERGES=10000
 		INPUT="${TOK}/${TYPE}_tok.${LANG}"
 		OUTPUT="${BPE}/${TYPE}.bpe${MERGES}.${LANG}"
+		echo "trying ${OUTPUT}"
 		CODES="${TOK}/codes_${LANG}.bpe"
 		VOCAB="${VOC}/${TYPE}_vocab.${LANG}"
-		echo "trying ${TYPE}-${LANG}"
 		#no test file for ZH-- skip the BPE for that combination
 		if [[ "$TYPE" != "test" ]] && [[ "$LANG" != "zh" ]]; then
 			echo "--${TYPE}-${LANG}"
