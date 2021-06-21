@@ -52,7 +52,7 @@ for TYPE in "train" "test"; do #removed "val"
 		VOCAB="${VOC}/${TYPE}_vocab.${LANG}"
 		
 		#no test file for ZH-- skip the BPE for that combination
-		if [ $TYPE -ne "test" ] && [ $LANG -ne "zh" ]; then
+		if [ "$TYPE" != "test" ] && [ "$LANG" != "zh" ]; then
 			echo "--${TYPE}-${LANG}"
 			python $SWNMT/subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB &
 		fi
@@ -70,7 +70,7 @@ for TYPE in "train" "test"; do #removed "val"
 		VOCAB="${VOC}/${TYPE}_vocab.${LANG}"
 		
 		#no test file for ZH-- skip the BPE for that combination
-		if [ $TYPE -ne "test" ] && [ $LANG -ne "zh" ]; then
+		if [ "$TYPE" != "test" ] && [ "$LANG" != "zh" ]; then
 			echo "--${TYPE}-${LANG}"
 			python $SWNMT/subword_nmt/apply_bpe.py -c $CODES --vocabulary $VOCAB < $INPUT > $OUTPUT &
 		fi
