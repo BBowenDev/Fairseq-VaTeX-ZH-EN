@@ -34,7 +34,6 @@ for num, data_file in enumerate(jsons):
     for raw_dict in data:
         if "enCap" in raw_dict.keys():
             if args.full == "True": #if using the full dataset, don't truncate
-                print("True!!!!!")
                 vtx_dict["en"] += raw_dict["enCap"]
             else: #otherwise, truncate dataset to parallel captions only
                 vtx_dict["en"] += raw_dict["enCap"][-5:]
