@@ -50,10 +50,10 @@ for TYPE in "train" "test"; do #removed "val"
 		OUTPUT="${BPE}/${TYPE}.bpe${MERGES}.${LANG}"
 		CODES="${TOK}/codes_${LANG}.bpe"
 		VOCAB="${VOC}/${TYPE}_vocab.${LANG}"
-		echo "trying ${OUTPUT}"
 		if [[ "${OUTPUT}" != *"test.bpe10000.zh"* ]]; then
 			echo "--${TYPE}-${LANG}"
-			python $SWNMT/subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB &
+			python $SWNMT/subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB
+			echo "finished ${OUTPUT}"
 		fi 
 	done
 done
