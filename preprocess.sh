@@ -67,11 +67,11 @@ for TYPE in "train" "test"; do #removed "val"
 		OUTPUT="${BPE}/${TYPE}.bpe${MERGES}.${LANG}"
 		CODES="${TOK}/codes_${LANG}.bpe"
 		VOCAB="${VOC}/${TYPE}_vocab.${LANG}"
-		echo " trying ${TYPE}-${LANG}"
 		#no test file for ZH-- skip the BPE for that combination
-		if [[ "$TYPE" != "test" ]] && [[ "$LANG" != "zh" ]]; then
+		if [[ "${OUTPUT}" != *"test.bpe10000.zh"* ]]; then
 			echo "--${TYPE}-${LANG}"
 			python $SWNMT/subword_nmt/apply_bpe.py -c $CODES --vocabulary $VOCAB < $INPUT > $OUTPUT &
+			echo "finished ${OUTPUT}"
 		fi
 	done
 done
