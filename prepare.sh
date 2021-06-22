@@ -7,7 +7,7 @@ pip install jieba
 
 FV=$(pwd)
 
-if [ ! -d "${FV}/models"]; then
+if [ ! -d "${FV}/models" ]; then
 	mkdir $FV/models
 fi
 
