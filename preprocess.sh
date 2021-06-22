@@ -50,11 +50,9 @@ for TYPE in "train" "val" "test"; do
 		OUTPUT="${BPE}/${TYPE}.bpe${MERGES}.${LANG}"
 		CODES="${TOK}/codes_${LANG}.bpe"
 		VOCAB="${VOC}/${TYPE}_vocab.${LANG}"
-		#no test file for ZH-- skip the BPE for that combination
-		if [[ "${OUTPUT}" != *"test.bpe10000.zh"* ]]; then
-			echo "--${TYPE}-${LANG}"
-			python $SWNMT/subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB
-		fi 
+
+		echo "--${TYPE}-${LANG}"
+		python $SWNMT/subword_nmt/learn_joint_bpe_and_vocab.py -s $MERGES -o $CODES --input $INPUT --write-vocabulary $VOCAB
 	done
 done
 wait
@@ -67,11 +65,9 @@ for TYPE in "train" "val" "test"; do
 		OUTPUT="${BPE}/${TYPE}.bpe${MERGES}.${LANG}"
 		CODES="${TOK}/codes_${LANG}.bpe"
 		VOCAB="${VOC}/${TYPE}_vocab.${LANG}"
-		#no test file for ZH-- skip the BPE for that combination
-		if [[ "${OUTPUT}" != *"test.bpe10000.zh"* ]]; then
-			echo "--${TYPE}-${LANG}"
-			python $SWNMT/subword_nmt/apply_bpe.py -c $CODES --vocabulary $VOCAB < $INPUT > $OUTPUT
-		fi
+
+		echo "--${TYPE}-${LANG}"
+		python $SWNMT/subword_nmt/apply_bpe.py -c $CODES --vocabulary $VOCAB < $INPUT > $OUTPUT
 	done
 done
 wait
