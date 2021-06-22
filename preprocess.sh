@@ -1,5 +1,7 @@
 #!/bin/bash
 
+MERGES=10000
+
 FV=$(pwd)
 VT=$FV/vatex
 SWNMT=$FV/subword-nmt
@@ -31,13 +33,12 @@ VOC=$VT/vocab
 echo "Getting raw captions"
 wget "https://eric-xw.github.io/vatex-website/data/vatex_training_v1.0.json" -P $RAW &
 wget "https://eric-xw.github.io/vatex-website/data/vatex_validation_v1.0.json" -P $RAW &
-wget "https://eric-xw.github.io/vatex-website/data/vatex_public_test_english_v1.1.json" -P $RAW &
 wait
 
 #run preprocessing script on raw captions, tokenizing and saving to new files
 echo "Tokenizing dataset"
 cd $VT/scripts
-python vatex_preprocess.py -f True
+python vatex_preprocess.py -f True -t $MERGES
 
 #10,000 merge operations are used (can be hyperparamaterized)
 #learning and applying bpe are broken up so they can be parallelized
@@ -45,7 +46,6 @@ cd $SWNMT
 echo "Learning BPE:"
 for TYPE in "train" "val" "test"; do
 	for LANG in "en" "zh"; do 
-		MERGES=10000
 		INPUT="${TOK}/${TYPE}_tok.${LANG}"
 		OUTPUT="${BPE}/${TYPE}.bpe${MERGES}.${LANG}"
 		CODES="${TOK}/codes_${LANG}.bpe"
