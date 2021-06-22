@@ -1,5 +1,5 @@
 # Fairseq-VaTeX-ZH-EN
-A text-only implementation of fairseq trained on the VaTeX dataset's English (EN) and Simplified Chinese (ZH) parallel caption datasets.
+A text-only implementation of fairseq trained on the VaTeX dataset's English (EN) and Simplified Chinese (ZH) caption datasets.
 
 ## Installation
 This model relies on pre-built shell scripts for installation. These scripts will run without necessary modification, but modifications can be made to optimize or customize installation.
