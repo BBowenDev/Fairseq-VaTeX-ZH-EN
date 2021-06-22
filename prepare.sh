@@ -7,6 +7,9 @@ pip install jieba
 
 FV=$(pwd)
 
+if [ ! -d "${FV}/models"]; then
+	mkdir $FV/models
+
 if [ ! -d "${FV}/vatex" ]; then
 	#create vatex folders
 	mkdir $FV/vatex
