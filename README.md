@@ -80,7 +80,7 @@ fairseq-preprocess --source-lang zh --target-lang en --trainpref $TRAIN --validp
 
 This model trains using the [`lightconv_wmt_zh_en_big`](https://github.com/pytorch/fairseq/blob/master/examples/pay_less_attention_paper/README.md) ZH-EN model architecture.
 
-To train the model, run `fairseq-train` with the following arguments:
+To train the model, run `fairseq-train` with the following arguments (variables may need to be declared again):
 
 ```
 cd ../Fairseq-VaTeX-ZH-EN
