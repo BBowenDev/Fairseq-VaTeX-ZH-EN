@@ -29,7 +29,7 @@ if [ ! -d "${FV}/external" ]; then
 	git clone https://github.com/pytorch/fairseq
 	cd fairseq
 	git submodule update --init --recursive
-	pip install --editable ./
+	pip install fairseq
 fi
 
 if [ ! -d "${FV}/subword-nmt" ]; then
