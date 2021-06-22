@@ -4,6 +4,7 @@ echo "Installing Prerequisites"
 
 pip install nltk
 pip install jieba
+pip install sacremoses
 
 FV=$(pwd)
 
