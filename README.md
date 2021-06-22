@@ -90,5 +90,11 @@ cd ../Fairseq-VaTeX-ZH-EN
 fairseq-train "${DATADIR}" --task translation --arch lightconv_wmt_zh_en_big --optimizer adam --adam-betas '(0.9, 0.98)' --clip-norm 0.0 --lr 5e-4 --lr-scheduler inverse_sqrt --warmup-updates 600 --dropout 0.3 --weight-decay 0.0001 --criterion label_smoothed_cross_entropy --label-smoothing 0.1 --max-tokens 4096 --eval-bleu --eval-bleu-args '{"beam": 5, "max_len_a": 1.2, "max_len_b": 10}' --eval-bleu-detok moses --eval-bleu-remove-bpe --eval-bleu-print-samples --best-checkpoint-metric bleu --maximize-best-checkpoint-metric --max-epoch 10 --save-dir "${MODELS}" --save-interval 1
 ```
 
-
 ## Testing & Evaluation
+
+Once the model has been trained, it can be tested with `fairseq-generate` with the arguments below. Depending on system settings, directory variables (e.g., `${DATADIR}`) may need to be replaced with directory strings (e.g., `"../Fairseq-VaTeX-ZH-EN/vatex/data"`).
+
+```
+cd ../Fairseq-VaTeX-ZH-EN
+fairseq-generate $DATADIR --task translation --eval-bleu-args '{"beam": 5, "max_len_a": 1.2, "max_len_b": 10}' --path $MODELS/checkpoint_best.pt
+```
