@@ -9,6 +9,7 @@ FV=$(pwd)
 
 if [ ! -d "${FV}/models"]; then
 	mkdir $FV/models
+fi
 
 if [ ! -d "${FV}/vatex" ]; then
 	#create vatex folders
