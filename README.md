@@ -11,6 +11,7 @@ Fairseq-VaTeX-ZH-EN requires several packages. All are installed by scripts, but
 * [Fairseq](https://github.com/pytorch/fairseq)
 * [nltk](https://www.nltk.org/index.html)
 * [punkt](https://github.com/nltk/nltk/blob/develop/nltk/tokenize/punkt.py)
+* [sacremoses](https://github.com/alvations/sacremoses)
 * [jieba](https://github.com/fxsjy/jieba)
 * [subword-nmt](https://github.com/rsennrich/subword-nmt)
 
@@ -80,7 +81,7 @@ fairseq-preprocess --source-lang zh --target-lang en --trainpref $TRAIN --validp
 
 This model trains using the [`lightconv_wmt_zh_en_big`](https://github.com/pytorch/fairseq/blob/master/examples/pay_less_attention_paper/README.md) ZH-EN model architecture.
 
-To train the model, run `fairseq-train` with the following arguments (variables may need to be declared again):
+To train the model, run `fairseq-train` with the arguments below. Depending on system settings, directory variables (e.g., `${MODELS}`) may need to be replaced with directory strings (e.g., `"../Fairseq-VaTeX-ZH-EN"`).
 
 ```
 cd ../Fairseq-VaTeX-ZH-EN
