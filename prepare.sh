@@ -37,6 +37,7 @@ if [ ! -d "${FV}/external" ]; then
 	cd $FV/external
 	git clone https://github.com/NVIDIA/apex
 	cd apex
+	python setup.py install --cuda_ext --cpp_ext
 	pip install apex	
 fi
 
