@@ -10,8 +10,9 @@ This model relies on pre-built shell scripts for installation. These scripts wil
 Fairseq-VaTeX-ZH-EN requires several packages. All are installed by scripts, but it may be helpful to keep track of installations by this repository.
 
 * Python 3.0 or greater
-* [Fairseq](https://github.com/pytorch/fairseq)
+* [fairseq](https://github.com/pytorch/fairseq)
 * [NVIDIA apex](https://github.com/NVIDIA/apex)
+* [CUDA >= 11.3](https://developer.nvidia.com/cuda-toolkit)
 * [nltk](https://www.nltk.org/index.html)
 * [punkt](https://github.com/nltk/nltk/blob/develop/nltk/tokenize/punkt.py)
 * [sacremoses](https://github.com/alvations/sacremoses)
