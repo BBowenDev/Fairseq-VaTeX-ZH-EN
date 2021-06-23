@@ -20,6 +20,13 @@ fi
 
 mv vatex_preprocess.py $FV/vatex/scripts
 
+#check CUDA installation/version
+CV = $(nvcc --version)
+if [ "${CV}" != *"release 11.3"* ]; then
+	apt-get install cuda
+
+fi
+
 if [ ! -d "${FV}/external" ]; then 
 	#create missing directories
 	mkdir $FV/external
@@ -37,7 +44,7 @@ if [ ! -d "${FV}/external" ]; then
 	cd $FV/external
 	git clone https://github.com/NVIDIA/apex
 	cd apex
-	python setup.py install --cuda_ext --cpp_ext
+	python setup.py install --cuda_ext --cpp_ext --pyprof
 	pip install apex	
 fi
 
