@@ -24,6 +24,7 @@ mv vatex_preprocess.py $FV/vatex/scripts
 CV = $(nvcc --version)
 if [ "${CV}" != *"release 10.2"* ]; then
 	apt-get install cuda-10-2 &
+	wait
 fi
 
 if [ ! -d "${FV}/external" ]; then 
@@ -37,6 +38,7 @@ if [ ! -d "${FV}/external" ]; then
 	cd fairseq
 	git submodule update --init --recursive
 	pip install fairseq &
+	wait
 	
 	#install apex
 	echo "Installing Apex"
@@ -44,7 +46,8 @@ if [ ! -d "${FV}/external" ]; then
 	git clone https://github.com/NVIDIA/apex
 	cd apex
 	python setup.py install --cuda_ext --cpp_ext --pyprof
-	pip install apex &	
+	pip install apex &
+	wait
 fi
 
 if [ ! -d "${FV}/subword-nmt" ]; then
