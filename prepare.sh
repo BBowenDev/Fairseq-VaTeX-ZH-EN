@@ -22,9 +22,8 @@ mv vatex_preprocess.py $FV/vatex/scripts
 
 #check CUDA installation/version
 CV = $(nvcc --version)
-if [ "${CV}" != *"release 11.3"* ]; then
-	apt-get install cuda
-
+if [ "${CV}" != *"release 10.2"* ]; then
+	apt-get install cuda-10-2
 fi
 
 if [ ! -d "${FV}/external" ]; then 
