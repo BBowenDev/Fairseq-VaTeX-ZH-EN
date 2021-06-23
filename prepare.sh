@@ -21,11 +21,11 @@ fi
 mv vatex_preprocess.py $FV/vatex/scripts
 
 #check CUDA installation/version
-CV = $(nvcc --version)
-if [ "${CV}" != *"release 10.2"* ]; then
-	apt-get install cuda-10-2 &
-	wait
-fi
+#CV = $(nvcc --version)
+#if [ "${CV}" != *"release 10.2"* ]; then
+#	apt-get install cuda-10-2 &
+#	wait
+#fi
 
 if [ ! -d "${FV}/external" ]; then 
 	#create missing directories
